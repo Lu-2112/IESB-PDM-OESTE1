@@ -19,7 +19,7 @@ npx create-expo-app@latest MeuDiarioAcademico --template blank
 
 | Tela Principal | Switch Ativo (Desafio Extra) |
 | :---: | :---: |
-| ![Tela Inicial](./tela-inicial.png) | ![Switch Ativo](./print_tela.png) |
+| ![Tela Inicial](./print_tela.png) | ![Switch Ativo](./print_tela.png) |
 
 
 ### Explicação do Layout e Componentes
@@ -44,3 +44,11 @@ Desafios Opcionais Implementados:
 Substituição do Button padrão pelo componente Pressable, adicionando estilização dinâmica (buttonPressed) para indicar quando o botão está sendo pressionado.
 
 Adição do componente Switch para a opção "Mostrar apenas obrigatórias".
+
+## Como executar
+
+Na pasta `MeuDiarioAcademico`, execute:
+
+```bash
+npm install
+npx expo start

@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
   // flex: 1 faz o container preencher 100% do espaço vertical disponível na tela
   container: {
     flex: 1,
+    flexDirection: 'column',
     backgroundColor: '#F8FAFC',
     padding: 16,
   },
