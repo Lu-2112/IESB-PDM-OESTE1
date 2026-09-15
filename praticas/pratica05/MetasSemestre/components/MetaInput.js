@@ -31,29 +31,31 @@ export default function MetaInput({ value, onChangeText, onAdd }) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    gap: 8,
-    marginBottom: 16,
+    gap: 10,
+    marginBottom: 20,
   },
   input: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    borderColor: '#dcdce2',
+    borderRadius: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
     backgroundColor: '#fff',
+    fontSize: 15,
   },
   button: {
-    backgroundColor: '#4f46e5',
-    paddingHorizontal: 16,
+    backgroundColor: '#ec4899',
+    paddingHorizontal: 20,
     justifyContent: 'center',
-    borderRadius: 8,
+    borderRadius: 10,
   },
   buttonPressed: {
-    opacity: 0.8,
+    opacity: 0.85,
   },
   buttonText: {
     color: '#fff',
-    fontWeight: 'bold',
+    fontWeight: '600',
+    fontSize: 14,
   },
 });
