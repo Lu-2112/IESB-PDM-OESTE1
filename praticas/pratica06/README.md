@@ -1,117 +1,63 @@
-# 💻 Prática 06: Arrumando a Casa (Componentização)
+# RotinaIESB
 
-Nesta prática o app **não ganha funcionalidade nova** para o usuário final. O objetivo é melhorar a **qualidade do código**: extrair o visual da tarefa para um componente separado, deixando o `App` mais limpo.
+Aplicativo mobile desenvolvido em React Native (Expo) para organizar a rotina acadêmica do aluno do IESB — cadastro, visualização e remoção de compromissos, com persistência local dos dados.
 
-## 🎯 Objetivos
+## 1. Comando usado para criar o projeto
 
-* Criar a estrutura `src/components`.
-* Extrair o card da tarefa para `TaskCard` com props.
-* Manter FlatList, add/delete e persistência funcionando (teste de regressão).
+npx create-expo-app@latest RotinaIESB --template blank
 
----
 
-## 📦 Fluxo Git
+Dependências instaladas:
 
-1. Crie a Issue da **Prática 06**.
-2. Branch:
+npx expo install @react-native-async-storage/async-storage react-native-safe-area-context
 
-```bash
-git checkout -b feature/pratica06
-```
 
-3. Trabalhe em `praticas/pratica06` (evolua a base da Prática 05).
+## 2. Prints do funcionamento
 
-```bash
-npm install
-npx expo start
-```
+### Tela vazia (sem compromissos cadastrados)
+![Lista vazia](./RotinaIESB/assets/listaVazia.png)
 
----
+### Tela com itens cadastrados
+![Itens](./RotinaIESB/assets/itens.png)
 
-## 🛠️ O que fazer
+### Após reabrir o app (persistência funcionando)
+![Após reabrir](./RotinaIESB/assets/reabrindoapp.png)
 
-### 1. Estrutura de pastas
+## 3. Mapa do useEffect (carga e salvamento)
 
-Na raiz do projeto Expo, crie:
+O código de persistência está em `App.js`:
 
-```text
-src/components/
-```
+- **useEffect de carga** (executado na montagem do app, array de dependências vazio `[]`): responsável por buscar os dados salvos no `AsyncStorage` com a chave `@rotina_iesb_compromissos` e popular o estado `compromissos` com `JSON.parse`.
+- **useEffect de salvamento** (dependência `[compromissos]`): disparado toda vez que a lista de compromissos muda, salvando o array atualizado no `AsyncStorage` com `JSON.stringify`.
 
-### 2. Criar `TaskCard`
+Ambos os blocos usam `try/catch` para tratar erros com `Alert.alert`.
 
-1. Crie `src/components/TaskCard.js` (ou `.jsx`).
-2. Recorte o JSX do card (a `View`, o `Text` e o `TouchableOpacity` do `X`) que está dentro do `renderItem` no `App`.
-3. Leve junto os estilos (`StyleSheet`) referentes ao card.
-4. Exporte o componente recebendo props `{ title, onDelete }`.
+## 4. Estrutura de arquivos
 
-Exemplo de forma do filho:
+RotinaIESB/
+App.js
+labels.js
+assets/
+logo.png
+components/
+CompromissoInput.js
+CompromissoList.js
 
-```javascript
-export function TaskCard({ title, onDelete }) {
-  return (
-    <View style={styles.card}>
-      <Text style={styles.title}>{title}</Text>
-      <TouchableOpacity onPress={onDelete}>
-        <Text>X</Text>
-      </TouchableOpacity>
-    </View>
-  );
-}
-```
 
-### 3. Usar no `App`
+- `labels.js`: centraliza os textos/rótulos usados na interface (título do app, placeholder, botão, título da lista, mensagem de lista vazia).
+- `components/CompromissoInput.js`: componente do campo de texto + botão de adicionar compromisso.
+- `components/CompromissoList.js`: componente da lista de compromissos (FlatList), com remoção via toque.
 
-```javascript
-import { TaskCard } from './src/components/TaskCard';
+## 5. Funcionalidades implementadas
 
-// na FlatList:
-renderItem={({ item }) => (
-  <TaskCard
-    title={item.title}
-    onDelete={() => handleDelete(item.id)}
-  />
-)}
-```
+- Cadastro de compromissos com validação de campo vazio
+- Listagem com FlatList e estado vazio customizado
+- Remoção de item por toque (Pressable + filter por id)
+- Persistência dos dados com AsyncStorage (JSON.stringify/JSON.parse)
+- Layout responsivo com Flexbox (row/column, width %, flex)
+- Componentização com props entre pai e filhos
 
-> Se na prática anterior o campo se chamava `task` em vez de `title`, padronize para `title` **ou** adapte o nome da prop — pai e filho precisam falar a mesma língua.
+## 6. Desafios opcionais implementados
 
-### 4. O que NÃO precisa mudar
+- **O4**: Uso de FlatList com `ListEmptyComponent` no lugar de `.map`/`ScrollView`
 
-* Lógica de `handleAdd` / `handleDelete`
-* AsyncStorage e `useEffect`
-* Estrutura da `FlatList` (`data`, `keyExtractor`)
-
-Só a **forma** de desenhar cada item muda.
-
----
-
-## 🧪 Teste de regressão
-
-No Expo Go, confirme que o app continua:
-
-1. Adicionando tarefas
-2. Removendo pelo `X`
-3. Rolando a lista
-4. Mantendo dados após fechar e reabrir o app
-
-Se algo parou, revise as props e o caminho do `import`.
-
----
-
-## ✅ Critérios de entrega
-
-* [ ] `TaskCard` em `src/components` com props `{ title, onDelete }`
-* [ ] `FlatList` usando o novo componente
-* [ ] Add, delete e persistência intactos
-* [ ] Issue, branch `feature/pratica06`, commit, push e Pull Request
-
-### Commit sugerido
-
-```bash
-git add .
-git commit -m "Refactor: Extrai interface da tarefa para componente TaskCard"
-git push origin feature/pratica06
-```
-
-Parabéns: ao final desta trilha você saiu do zero até um To-Do multiplataforma com persistência e código organizado em componentes.
